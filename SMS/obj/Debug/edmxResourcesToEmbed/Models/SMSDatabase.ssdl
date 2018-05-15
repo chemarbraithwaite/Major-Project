@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AssignedStudentTeacher">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="Teacher_username" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="Teacher_username" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AssignedTeacherClassGrade">
+    <Key>
+      <PropertyRef Name="GradeID" />
+      <PropertyRef Name="Teacher_username" />
+    </Key>
+    <Property Name="GradeID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Teacher_username" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Attendance">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="AttendanceDate" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="MorningAttendance" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="AfternoonAttendance" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="AttendanceDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClassGrade">
+    <Key>
+      <PropertyRef Name="GradeID" />
+    </Key>
+    <Property Name="GradeID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="SchoolID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Grade" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClassSubjects">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+      <PropertyRef Name="GradeID" />
+    </Key>
+    <Property Name="SubjectID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="GradeID" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Guardian">
+    <Key>
+      <PropertyRef Name="GuardianID" />
+    </Key>
+    <Property Name="GuardianID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="CellContact" Type="varchar" MaxLength="16" />
+    <Property Name="HomeContact" Type="varchar" MaxLength="16" />
+    <Property Name="SchoolID" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Guardian_Password">
+    <Key>
+      <PropertyRef Name="GuardianID" />
+    </Key>
+    <Property Name="GuardianID" Type="int" Nullable="false" />
+    <Property Name="Password" Type="char" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="Marks">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="SubjectID" />
+      <PropertyRef Name="Month" />
+      <PropertyRef Name="Year" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="SubjectID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Teacher_username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Grade" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Month" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Score" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MedicalInformation">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="MedSummary" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Role" Type="varchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="SchoolName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="50" />
+    <Property Name="Address2" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Tel" Type="varchar" MaxLength="14" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchoolID" Type="varchar" MaxLength="10" />
+    <Property Name="GradeID" Type="varchar" MaxLength="10" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student_Guardian">
+    <Key>
+      <PropertyRef Name="GuardianID" />
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="GuardianID" Type="int" Nullable="false" />
+    <Property Name="StudentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Student_Password">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Teacher_username" />
+    </Key>
+    <Property Name="Teacher_username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SchoolID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="RoleID" Type="varchar" MaxLength="10" />
+    <Property Name="Firstname" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="20" />
+    <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="CellContact" Type="varchar" MaxLength="16" />
+    <Property Name="HomeContact" Type="varchar" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="Teacher_Password">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeacherSubject">
+    <Key>
+      <PropertyRef Name="Teacher_username" />
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="Teacher_username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="SubjectID" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Attendanc__Stude__208CD6FA">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ClassSubj__Grade__22751F6C">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClassSubjects" Type="Self.ClassSubjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassGrade">
+        <PropertyRef Name="GradeID" />
+      </Principal>
+      <Dependent Role="ClassSubjects">
+        <PropertyRef Name="GradeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ClassSubj__Subje__236943A5">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="ClassSubjects" Type="Self.ClassSubjects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="ClassSubjects">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Guardian___Guard__25518C17">
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Guardian_Password" Type="Self.Guardian_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Guardian">
+        <PropertyRef Name="GuardianID" />
+      </Principal>
+      <Dependent Role="Guardian_Password">
+        <PropertyRef Name="GuardianID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Guardian__School__245D67DE">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Guardian">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MedicalIn__Stude__29221CFB">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalInformation" Type="Self.MedicalInformation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="MedicalInformation">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_classgrade_school">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="ClassGrade">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_guardian_student">
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student_Guardian" Type="Self.Student_Guardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Guardian">
+        <PropertyRef Name="GuardianID" />
+      </Principal>
+      <Dependent Role="Student_Guardian">
+        <PropertyRef Name="GuardianID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PStudentID">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student_Password" Type="Self.Student_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Student_Password">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_grade">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassGrade">
+        <PropertyRef Name="GradeID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="GradeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_student_guardian">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Student_Guardian" Type="Self.Student_Guardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Student_Guardian">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_student_marks">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_school">
+    <End Role="School" Type="Self.School" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_studentsID">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="AssignedStudentTeacher" Type="Self.AssignedStudentTeacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="AssignedStudentTeacher">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_subject_marks">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_subject_teacher">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="TeacherSubject" Type="Self.TeacherSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="TeacherSubject">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_classgrade">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AssignedTeacherClassGrade" Type="Self.AssignedTeacherClassGrade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassGrade">
+        <PropertyRef Name="GradeID" />
+      </Principal>
+      <Dependent Role="AssignedTeacherClassGrade">
+        <PropertyRef Name="GradeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_marks">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="Teacher_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_role">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_school">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_subject">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TeacherSubject" Type="Self.TeacherSubject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="TeacherSubject">
+        <PropertyRef Name="Teacher_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_teacher_username">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="AssignedTeacherClassGrade" Type="Self.AssignedTeacherClassGrade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="AssignedTeacherClassGrade">
+        <PropertyRef Name="Teacher_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeacherUsername">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AssignedStudentTeacher" Type="Self.AssignedStudentTeacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="AssignedStudentTeacher">
+        <PropertyRef Name="Teacher_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Username">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Teacher_Password" Type="Self.Teacher_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="Teacher_Password">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GuardianLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="int" Mode="In" />
+    <Parameter Name="password" Type="char" Mode="In" />
+  </Function>
+  <Function Name="StaffLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="char" Mode="In" />
+  </Function>
+  <EntityContainer Name="SMSModelStoreContainer">
+    <EntitySet Name="AssignedStudentTeacher" EntityType="Self.AssignedStudentTeacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AssignedTeacherClassGrade" EntityType="Self.AssignedTeacherClassGrade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClassGrade" EntityType="Self.ClassGrade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClassSubjects" EntityType="Self.ClassSubjects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Guardian" EntityType="Self.Guardian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Guardian_Password" EntityType="Self.Guardian_Password" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Marks" EntityType="Self.Marks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MedicalInformation" EntityType="Self.MedicalInformation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student_Guardian" EntityType="Self.Student_Guardian" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student_Password" EntityType="Self.Student_Password" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teacher_Password" EntityType="Self.Teacher_Password" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TeacherSubject" EntityType="Self.TeacherSubject" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Attendanc__Stude__208CD6FA" Association="Self.FK__Attendanc__Stude__208CD6FA">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Attendance" EntitySet="Attendance" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ClassSubj__Grade__22751F6C" Association="Self.FK__ClassSubj__Grade__22751F6C">
+      <End Role="ClassGrade" EntitySet="ClassGrade" />
+      <End Role="ClassSubjects" EntitySet="ClassSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ClassSubj__Subje__236943A5" Association="Self.FK__ClassSubj__Subje__236943A5">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="ClassSubjects" EntitySet="ClassSubjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Guardian___Guard__25518C17" Association="Self.FK__Guardian___Guard__25518C17">
+      <End Role="Guardian" EntitySet="Guardian" />
+      <End Role="Guardian_Password" EntitySet="Guardian_Password" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Guardian__School__245D67DE" Association="Self.FK__Guardian__School__245D67DE">
+      <End Role="School" EntitySet="School" />
+      <End Role="Guardian" EntitySet="Guardian" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MedicalIn__Stude__29221CFB" Association="Self.FK__MedicalIn__Stude__29221CFB">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="MedicalInformation" EntitySet="MedicalInformation" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_classgrade_school" Association="Self.Fk_classgrade_school">
+      <End Role="School" EntitySet="School" />
+      <End Role="ClassGrade" EntitySet="ClassGrade" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_guardian_student" Association="Self.Fk_guardian_student">
+      <End Role="Guardian" EntitySet="Guardian" />
+      <End Role="Student_Guardian" EntitySet="Student_Guardian" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PStudentID" Association="Self.FK_PStudentID">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Student_Password" EntitySet="Student_Password" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_grade" Association="Self.FK_student_grade">
+      <End Role="ClassGrade" EntitySet="ClassGrade" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_student_guardian" Association="Self.Fk_student_guardian">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Student_Guardian" EntitySet="Student_Guardian" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_student_marks" Association="Self.Fk_student_marks">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_school" Association="Self.FK_student_school">
+      <End Role="School" EntitySet="School" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_studentsID" Association="Self.FK_studentsID">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="AssignedStudentTeacher" EntitySet="AssignedStudentTeacher" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_subject_marks" Association="Self.Fk_subject_marks">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_subject_teacher" Association="Self.Fk_subject_teacher">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="TeacherSubject" EntitySet="TeacherSubject" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_classgrade" Association="Self.Fk_teacher_classgrade">
+      <End Role="ClassGrade" EntitySet="ClassGrade" />
+      <End Role="AssignedTeacherClassGrade" EntitySet="AssignedTeacherClassGrade" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_marks" Association="Self.Fk_teacher_marks">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_role" Association="Self.Fk_teacher_role">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_school" Association="Self.Fk_teacher_school">
+      <End Role="School" EntitySet="School" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_subject" Association="Self.Fk_teacher_subject">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="TeacherSubject" EntitySet="TeacherSubject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_teacher_username" Association="Self.FK_teacher_username">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="AssignedTeacherClassGrade" EntitySet="AssignedTeacherClassGrade" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeacherUsername" Association="Self.FK_TeacherUsername">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="AssignedStudentTeacher" EntitySet="AssignedStudentTeacher" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Username" Association="Self.FK_Username">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Teacher_Password" EntitySet="Teacher_Password" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

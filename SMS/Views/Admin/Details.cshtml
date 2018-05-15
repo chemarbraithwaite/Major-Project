@@ -1,0 +1,36 @@
+﻿@model SMS.Models.Teacher
+
+@{
+    ViewBag.Title = "Admin Profile";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+
+<div style="margin: 0 auto;">
+    <div class="card" style="max-width:400px; margin: 0 auto;">
+        <img class="card-img-top img-fluid" src="~/Content/images/avartar.png" alt="Card image" style="width:100%; height:auto;">
+        <div class="card-body">
+            <h4 class="card-title text-center">@Model.Firstname @Model.LastName </h4>
+            <p class="card-text ">
+
+                <b> First name: </b>  @Html.DisplayFor(model => model.Firstname) <br />
+                <b> Middle name: </b> @Html.DisplayFor(model => model.MiddleName) <br />
+                <b> Last name: </b> @Html.DisplayFor(model => model.LastName) <br />
+                <b> Gender: </b> @Html.DisplayFor(model => model.Gender) <br />
+                <b> DOB: </b> @Model.DOB.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                <b> Start date: </b> @Model.StartDate.Value.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                <b> Email: </b> @Html.DisplayFor(model => model.Email) <br />
+                <b> Cell contact: </b> @Html.DisplayFor(model => model.CellContact) <br />
+                <b> Home contact: </b> @Html.DisplayFor(model => model.HomeContact) <br />
+                <b> Role: </b> @Html.DisplayFor(model => model.Role.Role1) <br />
+                <b> School: </b> @Html.DisplayFor(model => model.School.SchoolName) <br />
+
+            </p>
+            <div class="text-center">
+                <a href="/Admin/Edit/@User.Identity.Name" class="btn btn-primary ">Edit Profile</a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+

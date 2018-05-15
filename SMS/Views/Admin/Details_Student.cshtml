@@ -1,0 +1,125 @@
+﻿@model SMS.Models.Student
+
+@{
+    ViewBag.Title = "Student Profile";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+
+<h2>@Model.FirstName @Model.LastName</h2>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+            <i class="fa fa-id-card"></i> <span>Student Summary</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" role="tab" aria-controls="medical" aria-selected="false">
+            <i class="fa fa-clipboard"></i> <span>Medical Information</span>
+
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="guardian-tab" data-toggle="tab" href="#guardian" role="tab" aria-controls="guardian" aria-selected="false">
+            <i class="fa fa-users"></i> <span>Guardian Information</span>
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <br />
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+        <div class="card" style="max-width:400px; margin: 0 auto;">
+            @if (Model.Gender.Equals("M"))
+            {
+                <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+            }
+            else
+            {
+                <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+            }
+            <div class="card-body">
+                <h4 class="card-title text-center">@Model.FirstName @Model.LastName </h4>
+                <p class="card-text ">
+
+                    <b> First name: </b>  @Html.DisplayFor(model => model.FirstName) <br />
+                    <b> Middle name: </b> @Html.DisplayFor(model => model.MiddleName) <br />
+                    <b> Last name: </b> @Html.DisplayFor(model => model.LastName) <br />
+                    <b> Gender: </b> @Html.DisplayFor(model => model.Gender) <br />
+                    <b> DOB: </b> @Model.DOB.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                    <b> Class: </b> @Html.DisplayFor(model => model.ClassGrade.Grade) <br />
+                    <b> School: </b> @Html.DisplayFor(model => model.School.SchoolName) <br />
+
+                </p>
+                <div class="text-center">
+                    <a href="/Admin/Edit_Student/@Model.StudentID" class="btn btn-primary ">Edit</a>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="mt-5">
+            <a href="/Admin/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="medical" role="tabpanel" aria-labelledby="medical-tab">
+        <div>
+            <a href="/Admin/Edit_Medical/@Model.StudentID" class="btn btn-outline-secondary">Edit</a>
+        </div>
+        @if (Model.MedicalInformation != null)
+    {
+        <div class="card mb-4 mt-5" style="max-width:400px; margin: 0 auto;">
+
+            <img class="card-img-top img-fluid" src="~/Content/images/medical-record.jpg" alt="Card image" style="width:100%; height:auto;">
+
+            <div class="card-body">
+                <p class="card-text">
+
+                    @Model.MedicalInformation.MedSummary
+                </p>
+            </div>
+        </div>
+
+}
+        <div class="mt-5">
+            <a href="/Admin/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="guardian" role="tabpanel" aria-labelledby="guardian-tab">
+        <br />
+        <br />
+        @foreach (var item in Model.Guardians)
+    {
+        <div class="card mb-4" style="max-width:400px; margin: 0 auto;">
+            @if (item.Gender.Equals("M"))
+        {
+            <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+    }
+    else
+    {
+        <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+}
+            <div class="card-body">
+                <p class="card-text">
+                    Name: @item.FirstName @item.LastName <br />
+                    Email: @item.Email <br />
+                    Cell contact: @item.CellContact <br />
+                    Home contact: @item.HomeContact <br />
+                    Gender: @item.Gender
+                </p>
+            </div>
+        </div>
+
+}
+
+
+        <div class="mt-5">
+            <a href="/Admin/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+</div>
+
+
+
+

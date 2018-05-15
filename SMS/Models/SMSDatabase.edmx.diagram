@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6322c0c20f154d79a2916e25b1d59057" Name="Diagram1">
+        <EntityTypeShape EntityType="SMSModel.Attendance" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.ClassGrade" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Guardian" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Guardian_Password" Width="1.5" PointX="5.25" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Mark" Width="1.5" PointX="10.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.MedicalInformation" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Role" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.School" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Student" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Student_Password" Width="1.5" PointX="7.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Subject" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Teacher" Width="1.5" PointX="10.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMSModel.Teacher_Password" Width="1.5" PointX="12.75" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="SMSModel.FK__Attendanc__Stude__208CD6FA" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_classgrade_school" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK_student_grade" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK__Guardian___Guard__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK__Guardian__School__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_student_marks" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_subject_marks" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_teacher_marks" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK__MedicalIn__Stude__29221CFB" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_teacher_role" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK_student_school" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Fk_teacher_school" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK_PStudentID" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.FK_Username" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.AssignedStudentTeacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.AssignedTeacherClassGrade" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.ClassSubjects" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.Student_Guardian" ManuallyRouted="false" />
+        <AssociationConnector Association="SMSModel.TeacherSubject" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

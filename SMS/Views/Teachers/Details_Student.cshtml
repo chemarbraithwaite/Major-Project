@@ -1,0 +1,589 @@
+﻿@model SMS.Models.Student
+
+@{
+    ViewBag.Title = "Student Profile";
+    Layout = "~/Views/Teachers/_Teacher_Layout.cshtml";
+}
+
+
+
+<h2>@Model.FirstName @Model.LastName</h2>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+            <i class="fa fa-id-card"></i> <span>Student Summary</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="medical-tab" data-toggle="tab" href="#medical" role="tab" aria-controls="medical" aria-selected="false">
+            <i class="fa fa-clipboard"></i> <span>Medical Information</span>
+
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="guardian-tab" data-toggle="tab" href="#guardian" role="tab" aria-controls="guardian" aria-selected="false">
+            <i class="fa fa-users"></i> <span>Guardian Information</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="grades-tab" data-toggle="tab" href="#grades" role="tab" aria-controls="grades" aria-selected="false">
+            <i class="fa fa-font"></i> <span>Grades</span>
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <br />
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+        <div class="card" style="max-width:400px; margin: 0 auto;">
+            @if (Model.Gender.Equals("M"))
+            {
+                <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+            }
+            else
+            {
+                <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+            }
+            <div class="card-body">
+                <h4 class="card-title text-center">@Model.FirstName @Model.LastName </h4>
+                <p class="card-text ">
+
+                    <b> First name: </b>  @Html.DisplayFor(model => model.FirstName) <br />
+                    <b> Middle name: </b> @Html.DisplayFor(model => model.MiddleName) <br />
+                    <b> Last name: </b> @Html.DisplayFor(model => model.LastName) <br />
+                    <b> Gender: </b> @Html.DisplayFor(model => model.Gender) <br />
+                    <b> DOB: </b> @Model.DOB.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                    <b> Class: </b> @Html.DisplayFor(model => model.ClassGrade.Grade) <br />
+                    <b> School: </b> @Html.DisplayFor(model => model.School.SchoolName) <br />
+
+                </p>
+
+            </div>
+
+        </div>
+        <div class="mt-5">
+            <a href="/Teachers/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="medical" role="tabpanel" aria-labelledby="medical-tab">
+
+        @if (Model.MedicalInformation != null)
+        {
+            <div class="card mb-4 mt-5" style="max-width:400px; margin: 0 auto;">
+
+                <img class="card-img-top img-fluid" src="~/Content/images/medical-record.jpg" alt="Card image" style="width:100%; height:auto;">
+
+                <div class="card-body">
+                    <p class="card-text">
+
+                        @Model.MedicalInformation.MedSummary
+                    </p>
+                </div>
+            </div>
+
+        }
+        <div class="mt-5">
+            <a href="/Teachers/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="guardian" role="tabpanel" aria-labelledby="guardian-tab">
+        <br />
+        @foreach (var item in Model.Guardians)
+        {
+            <div class="card mb-4" style="max-width:400px; margin: 0 auto;">
+                @if (item.Gender.Equals("M"))
+                {
+                    <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+                }
+                else
+                {
+                    <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+                }
+                <div class="card-body">
+                    <p class="card-text">
+                        Name: @item.FirstName @item.LastName <br />
+                        Email: @item.Email <br />
+                        Cell contact: @item.CellContact <br />
+                        Home contact: @item.HomeContact <br />
+                        Gender: @item.Gender
+                    </p>
+                </div>
+            </div>
+
+        }
+
+        <div class="mt-5">
+            <a href="/Teachers/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="grades" role="tabpanel" aria-labelledby="grades-tab">
+        <br />
+        @{ var subjects = Model.ClassGrade.Subjects;
+            string[] subjectList = new string[subjects.Count];
+            List<SMS.Models.Mark> Marks = new List<SMS.Models.Mark>();
+            DateTime date = DateTime.Today;
+            SMS.Models.Mark grade = new SMS.Models.Mark();
+
+            var marks = Model.Marks.Where(m => m.Grade.Equals(Model.ClassGrade.Grade));
+            double[] monthlyAverage = new double[10];
+            int[][] monthlyGrade = new int[4][];
+            int[][] subjectGrade = new int[4][];
+            double[] subjectAverage = new double[subjects.Count()];
+
+            int count = 0;
+
+            monthlyGrade[0] = new int[10];
+            monthlyGrade[1] = new int[10];
+            monthlyGrade[2] = new int[10];
+            monthlyGrade[3] = new int[10];
+            subjectGrade[0] = new int[subjectList.Count()];
+            subjectGrade[1] = new int[subjectList.Count()];
+            subjectGrade[2] = new int[subjectList.Count()];
+            subjectGrade[3] = new int[subjectList.Count()];
+
+
+
+
+
+            foreach (var month in (List<string>)ViewBag.Order)
+            {
+                var grades = marks.Where(g => g.Month.Equals(month));
+                monthlyGrade[0][count] = grades.Where(g => g.Score >= 90).Count();
+                monthlyGrade[1][count] = grades.Where(g => g.Score >= 80 && g.Score < 90).Count();
+                monthlyGrade[2][count] = grades.Where(g => g.Score >= 70 && g.Score < 80).Count();
+                monthlyGrade[3][count] = grades.Where(g => g.Score < 70).Count();
+
+                var total = grades.Count();
+                double sum = 0;
+
+                foreach (var g in grades)
+                {
+                    sum += g.Score;
+                }
+
+                monthlyAverage[count] = Math.Round(sum / total, 2);
+                count++;
+
+            }
+
+            count = 0;
+
+        }
+
+        <div class="table-responsive bg-white">
+
+
+            <table id="students" class="table table-sm table-bordered table-striped display">
+                <thead>
+
+                    <tr>
+                        <th>
+                            Subject
+                        </th>
+                        @foreach (var month in (List<string>)ViewBag.Months)
+                        {
+                            <th>
+                                @month
+                            </th>
+                            <th>
+                                Grade
+                            </th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in subjects)
+                    {
+
+                        var subjectGrades = marks.Where(g => g.SubjectID.Equals(item.SubjectID));
+                        var subjectTotal = subjectGrades.Count();
+                        double subjectSum = 0;
+
+                        subjectGrade[0][count] = subjectGrades.Where(g => g.Score >= 90).Count();
+                        subjectGrade[1][count] = subjectGrades.Where(g => g.Score >= 80 && g.Score < 90).Count();
+                        subjectGrade[2][count] = subjectGrades.Where(g => g.Score >= 70 && g.Score < 80).Count();
+                        subjectGrade[3][count] = subjectGrades.Where(g => g.Score < 70).Count();
+
+                        foreach (var g in subjectGrades)
+                        {
+                            subjectSum += g.Score;
+                        }
+
+                        subjectAverage[count] = Math.Round(subjectSum / subjectTotal, 2);
+                        subjectList[count] = item.Subject1;
+                        count++;
+
+                        <tr>
+                            <td>
+                                @item.Subject1
+                            </td>
+
+
+                            @foreach (var month in (List<string>)ViewBag.Order)
+                            {
+
+
+                                if (date.Month < 9)
+                                {
+                                    grade = marks.Where(m => m.SubjectID.Equals(item.SubjectID) && m.Month.Equals(month) && (m.Year.Equals(date.Year) || m.Year.Equals(date.Year - 1))).FirstOrDefault();
+                                }
+                                else
+                                {
+                                    grade = marks.Where(m => m.SubjectID.Equals(item.SubjectID) && m.Month.Equals(month) && m.Year.Equals(date.Year)).FirstOrDefault();
+                                }
+
+                                if (grade != null)
+                                {
+
+                                    <td>
+
+                                        @grade.Score
+                                    </td>
+                                    <td>
+                                        @if (grade.Score >= 90)
+                                        {
+                                            <i>A</i>;
+                                        }
+                                        else if (grade.Score >= 80)
+                                        {
+                                            <i>B</i>
+                                        }
+                                        else if (grade.Score >= 70)
+                                        {
+                                            <i>C</i>
+                                        }
+                                        else
+                                        {
+                                            <i>Fail</i>
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                }
+
+                            }
+
+
+
+                        </tr>
+                    }
+
+                    <tr>
+                        <td>
+                            <b>Averages</b>
+                        </td>
+                        @foreach (var item in monthlyAverage)
+                        {
+                            <td>
+                                @if (Double.IsNaN(item))
+                                {
+                                    <b>N/A</b>
+                                }
+
+                                else
+                                {
+                                    <b> @item</b>
+                                }
+
+                            </td>
+                            <td></td>
+
+                        }
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+
+
+
+        </div>
+
+        <div class="row mt-5">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-bar-chart"></i> Monthly Score Performance Over Academic Year
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="month"></canvas>
+                    </div>
+                    <div class="card-footer small text-muted">Monthly performance</div>
+                </div><!-- end card-->
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-bar-chart"></i> Score Performance Per Subject
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="subject"></canvas>
+                    </div>
+                    <div class="card-footer small text-muted">Subject performance</div>
+                </div><!-- end card-->
+            </div>
+        </div>
+        <div class="row mt-5">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-bar-chart"></i> Monthly Grade Performance Over Academic Year
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="monthGrade"></canvas>
+                    </div>
+                    <div class="card-footer small text-muted">Monthly performance</div>
+                </div><!-- end card-->
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-bar-chart"></i> Grade Performance Per Subject
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="subjectGrade"></canvas>
+                    </div>
+                    <div class="card-footer small text-muted">Subject performance</div>
+                </div><!-- end card-->
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <a href="/Teachers/Students" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/plugins/chart.js/chart.min.js"></script>
+<script>
+
+    var monthChart = document.getElementById("month").getContext('2d');
+    var month = new Chart(monthChart, {
+
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Encode(@ViewBag.Months.ToArray())) ,
+            datasets: [{
+                type: 'bar',
+                label: 'Bar Average',
+                data:  @Html.Raw(Json.Encode(@monthlyAverage)) ,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            },
+                {
+                    type: 'line',
+                    label: 'Line Average',
+                    borderColor: '#484c4f',
+                    borderWidth: '3',
+                    fill: false,
+                    data: @Html.Raw(Json.Encode(@monthlyAverage)),
+
+                }
+
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+    });
+
+    var monthGradeChart = document.getElementById("monthGrade").getContext('2d');
+    var monthGrade = new Chart(monthGradeChart, {
+
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Encode(@ViewBag.Months.ToArray())) ,
+            datasets: [{
+                type: 'bar',
+                label: "A's",
+                data:  @Html.Raw(Json.Encode(@monthlyGrade[0])) ,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "B's",
+                data:  @Html.Raw(Json.Encode(@monthlyGrade[1])) ,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+                },
+                {
+                type: 'bar',
+                label: "C's",
+                data:  @Html.Raw(Json.Encode(@monthlyGrade[2])) ,
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Fails",
+                data:  @Html.Raw(Json.Encode(@monthlyGrade[3])) ,
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                borderColor: 'rgba(0, 0, 0, 1)',
+                borderWidth: 1
+            }
+
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+    });
+
+      var subjectGradeChart = document.getElementById("subjectGrade").getContext('2d');
+    var subjectGrade = new Chart(subjectGradeChart, {
+
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Encode(subjectList)) ,
+            datasets: [{
+                type: 'bar',
+                label: "A's",
+                data:  @Html.Raw(Json.Encode(@subjectGrade[0])) ,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "B's",
+                data:  @Html.Raw(Json.Encode(@subjectGrade[1])) ,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+                },
+                {
+                type: 'bar',
+                label: "C's",
+                data:  @Html.Raw(Json.Encode(@subjectGrade[2])) ,
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            },
+            {
+                type: 'bar',
+                label: "Fails",
+                data:  @Html.Raw(Json.Encode(@subjectGrade[3])) ,
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                borderColor: 'rgba(0, 0, 0, 1)',
+                borderWidth: 1
+            }
+
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+    });
+
+    var subjectChart = document.getElementById("subject").getContext('2d');
+    var subject = new Chart(subjectChart, {
+
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Encode(subjectList)) ,
+            datasets: [{
+                label: 'Subject Average',
+                data:  @Html.Raw(Json.Encode(subjectAverage)) ,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+    });
+
+</script>

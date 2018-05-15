@@ -1,0 +1,171 @@
+﻿@model  List<SMS.Models.Student>
+
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@using (Html.BeginForm("RegisterUpdate", "Teachers", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3>
+                        <i class="fa fa-table"></i> Students Register
+                        @if (ViewBag.Date != null)
+                        {
+                            @ViewBag.Date
+                        }
+
+
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+
+                        <table id="students" class="table table-sm table-bordered display">
+                            <thead>
+
+                                <tr>
+                                    <th>
+                                        Student ID
+                                    </th>
+                                    <th>
+                                        First name
+                                    </th>
+                                    <th>
+                                        Last name
+                                    </th>
+                                    <th>
+                                        Morning 
+                                    </th>
+                                    <th>
+                                        Afternoon
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.Hidden("student.Index", @i)
+                                            @Html.Hidden("student[" + @i + "].MiddleName", Model[i].MiddleName, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].SchoolID", Model[i].SchoolID, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].GradeID", Model[i].GradeID, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].Gender", Model[i].Gender, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].Date", Model[i].Date, new { @readonly = "readonly" })
+
+
+                                            @Html.Hidden("student[" + @i + "].StudentID", Model[i].StudentID, new { @readonly = "readonly" })
+                                            @Model[i].StudentID
+                                        </td>
+                                        <td>
+                                            @Html.Hidden("student[" + @i + "].FirstName", Model[i].FirstName, new { @readonly = "readonly" })
+                                            @Model[i].FirstName
+                                        </td>
+                                        <td>
+                                            @Html.Hidden("student[" + @i + "].LastName", Model[i].LastName, new { @readonly = "readonly" })
+                                            @Model[i].LastName
+                                        </td>
+                                        <td>
+                                            @{ List<string> status = (List<string>)ViewBag.Attendance;
+
+
+                                                for (int x = 0; x < status.Count; x++)
+                                                {
+
+
+
+                                                    if (Model[i].MAttend.Equals(status.ElementAt(x)))
+                                                    {
+
+                                                        @Html.RadioButton("student[" + @i + "].MAttend", status.ElementAt(x), true, new { @class = "mb-0" })
+                                                    }
+
+                                                    else
+                                                    {
+                                                        @Html.RadioButton("student[" + @i + "].MAttend", status.ElementAt(x), false, new { @class = "mb-0" })
+                                                    }
+
+                                                    <label>@status.ElementAt(x)</label>
+
+                                                }
+
+                                            }
+                                        </td>
+                                        <td>
+                                            
+                                            @{
+
+
+                                                for (int x = 0; x < status.Count; x++)
+                                                {
+
+
+
+                                                    if (Model[i].MAttend.Equals(status.ElementAt(x)))
+                                                    {
+
+                                                        @Html.RadioButton("student[" + @i + "].AAttend", status.ElementAt(x), true, new { @class = "mb-0" })
+                                                    }
+
+                                                    else
+                                                    {
+                                                        @Html.RadioButton("student[" + @i + "].AAttend", status.ElementAt(x), false, new { @class = "mb-0" })
+                                                    }
+
+                                                    <label class="text-justify">@status.ElementAt(x) </label>
+
+
+                                                }
+
+                                            }
+
+
+                                        </td>
+
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div>
+                        @if (Model.Count != 0)
+                        {
+                            <input type="submit" value="Save" class="btn btn-outline-primary mt-3 ml-1" />
+                        }
+                        @if (TempData["Success"] != null)
+                        {
+                            <p class="alert alert-success mt-3" id="successMessage">@TempData["Success"]</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#students').DataTable({
+
+            "scrollY": "350px",
+            "paging": false
+        });
+    });
+</script>
+

@@ -1,0 +1,69 @@
+﻿@model List<SMS.Models.Student>
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Teachers/_Teacher_Layout.cshtml";
+}
+
+<link href="~/Content/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Register","Teachers"))
+{
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-5">
+        <div class="card">
+
+            <div class=" card-body ">
+                <p class="card-title font-weight-bold">
+                    Select a date to take the register for
+                </p>
+                <input id="date" type="text" name="date" />
+
+
+
+                <script>
+                    $(function () {
+
+                        var max = new Date();
+
+                        if (max.getDay() == 0) {
+                            max.setDate(max.getDate() - 2);
+                        } else if (max.getDay() == 6) {
+                            max.setDate(max.getDate() - 1);
+
+                        }
+
+                        var currentDate = new Date();
+
+                        if (currentDate.getMonth() >= 7) {
+                            var min = new Date(currentDate.getFullYear(), 08, 01);
+                        } else
+                            var min = new Date((currentDate.getFullYear() - 1), 08, 01);
+                           
+
+                        $('input[name="date"]').daterangepicker({
+                            singleDatePicker: true,
+                            showDropdowns: true,
+                            maxDate: max,
+                            minDate: min,
+                            startDate: max,
+                            isInvalidDate: function (date) {
+                                return (date.day() == 0 || date.day() == 6);
+                            }
+                        });
+                    });
+                </script>
+
+                <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm">
+            </div>
+        </div>
+    </div>
+
+
+}
+
+    @if(Model != null)
+    { Html.RenderPartial("Register", Model); }
+
+
+<script src="~/Content/plugins/datetimepicker/js/daterangepicker.js"></script>
+

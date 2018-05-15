@@ -1,0 +1,142 @@
+﻿@model  List<SMS.Models.Student>
+
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@using (Html.BeginForm("GradesUpdate", "Teachers", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3>
+                        <i class="fa fa-table"></i> Student Grades
+                        @if (ViewBag.Date != null)
+                        {
+                            @ViewBag.Date
+                        }
+                        @{ List<SMS.Models.Subject> subjects = (List<SMS.Models.Subject>)ViewBag.Subjects;
+                            int z = 2;}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div>
+
+                        Toggle columns (click to show / hide columns):
+                        @for (int i = 0; i < subjects.Count; i++)
+                        {
+
+                            <a href="#" class="toggle-vis" data-column=@z><b>@subjects.ElementAt(i).Subject1</b></a> <i>|</i>
+                            {z++; }
+                        }
+                    </div>
+                    <br />
+
+                    <div class="table-responsive">
+
+
+                        <table id="students" class="table table-sm table-bordered display">
+                            <thead>
+
+                                <tr>
+                                    <th>
+                                        Student ID
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    @foreach (var item in subjects)
+                                    {
+                                        <th>
+                                            @item.Subject1
+                                        </th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.Hidden("student.Index", @i)
+                                            @Html.Hidden("student[" + @i + "].MiddleName", Model[i].MiddleName, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].SchoolID", Model[i].SchoolID, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].GradeID", Model[i].GradeID, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].Gender", Model[i].Gender, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].Date", Model[i].Date, new { @readonly = "readonly" })
+
+
+                                            @Html.Hidden("student[" + @i + "].StudentID", Model[i].StudentID, new { @readonly = "readonly" })
+                                            @Model[i].StudentID
+                                        </td>
+                                        <td>
+                                            @Html.Hidden("student[" + @i + "].FirstName", Model[i].FirstName, new { @readonly = "readonly" })
+                                            @Html.Hidden("student[" + @i + "].LastName", Model[i].LastName, new { @readonly = "readonly" })
+                                            @Model[i].FirstName @Model[i].LastName
+                                        </td>
+                                        @for (int x = 0; x < Model[i].Scores.Count; x++)
+                                        {
+                                            <td>
+
+                                                @Html.TextBox("student[" + i + "].Scores[" + x + "]", Model[i].Scores[x], new { @class = "form-control", pattern = "^(100)$|^([0-9]{1,2}[.][0-9]{0,2})$|^([0-9]{1,2})$" })
+
+
+                                            </td>
+                                        }
+
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div>
+                        @if (Model.Count != 0)
+                        {
+                            <input type="submit" value="Save" class="btn btn-outline-primary mt-3 ml-1" />
+                        }
+                        @if (TempData["Success"] != null)
+                        {
+                            <p class="alert alert-success mt-3" id="successMessage">@TempData["Success"]</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var table = $('#students').DataTable({
+
+            "scrollY": "350px",
+            "paging": false
+
+        });
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+
+            // Get the column API object
+            var column = table.column($(this).attr('data-column'));
+
+            // Toggle the visibility
+            column.visible(!column.visible());
+        });    });
+</script>
+

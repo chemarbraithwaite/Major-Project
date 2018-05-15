@@ -1,0 +1,67 @@
+﻿@model SMS.Models.Login
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card mx-auto mt-5" style="max-width: 25rem">
+            <div class="card-header">Login</div>
+            <div class="card-body">
+
+
+                @using (Html.BeginForm("Authenticate", "Login"))
+                {
+                    @Html.AntiForgeryToken()
+
+                    if (!String.IsNullOrEmpty(ViewBag.Error))
+                    {
+                    
+                        @Html.ValidationSummary(false, (string) ViewBag.Error, new { @class = "alert alert-danger" })
+
+                    }
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.user)
+                        @Html.EditorFor(model => model.user, new { htmlAttributes = new { @class = "form-control", placeholder = "Username", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.user, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.type)
+                        @Html.DropDownList("type", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.password)
+                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "Password", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-primary btn-block" />
+
+                    </div>
+
+
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>

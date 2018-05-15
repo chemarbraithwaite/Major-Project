@@ -1,0 +1,377 @@
+﻿
+@model SMS.Models.TeacherDashboard
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Teachers/_Teacher_Layout.cshtml";
+}
+<link href="~/Content/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" />
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+
+<style>
+    #external-events .fc-event {
+        margin: 10px 0;
+        cursor: pointer;
+    }
+
+    #calendar {
+        width: 100%;
+    }
+
+    .fc-event {
+        font-size: 1em;
+        border-radius: 2px;
+        border: none;
+        padding: 5px;
+    }
+
+    .fc-day-grid-event .fc-content {
+        color: #fff;
+    }
+
+    .fc-button {
+        background: #eaeaea;
+        border: none;
+        color: #666b6f;
+        margin: 0 3px !important;
+        padding: 5px 12px !important;
+        text-transform: capitalize;
+        height: auto !important;
+        box-shadow: none !important;
+        border-radius: 3px !important;
+    }
+
+    .fc-state-down, .fc-state-active, .fc-state-disabled {
+        background-color: #009ffc !important;
+        color: #ffffff !important;
+        text-shadow: none !important;
+    }
+
+    .fc-toolbar h2 {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+        text-transform: uppercase;
+    }
+
+    .fc th.fc-widget-header {
+        background: #e6e6e6;
+        font-size: 13px;
+        text-transform: uppercase;
+        line-height: 18px;
+        padding: 10px 0px;
+    }
+
+    .fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+        border-color: #eff1f3;
+    }
+</style>
+
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title "> <i class="fa fa-calendar"></i> Calendar of Events</h1><br />
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-lg-4 col-xl-3">
+                <div class="card-box tilebox-one noradius">
+                    <div id='external-events'>
+                        <h4>Draggable Events</h4>
+                        <p>Drag and drop your event in the calendar</p>
+                        <div class='fc-event bg-primary'>Meeting with principal</div>
+                        <div class='fc-event bg-warning'>Class report due</div>
+                        <div class='fc-event bg-danger'>Math assignment due</div>
+                        <div class='fc-event bg-info'>Class party</div>
+                        <div class='fc-event bg-info'>Field trip</div>
+                        <p>
+                            <input type='checkbox' id='drop-remove' />
+                            <label for='drop-remove'>remove after drop</label>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-8 col-lg-8 col-xl-9">
+                <div class="card-box tilebox-one noradius">
+                    <div id="calendar"></div>
+                    <div class="clearfix"></div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title clearfix ">Statistics</h1><br />
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-pie-chart"></i> Gender Ratio
+                </div>
+
+                <div class="card-body">
+                    <canvas id="genderRatio"></canvas>
+                </div>
+                <div class="card-footer small text-muted">Gender ratio for your class</div>
+            </div><!-- end card-->
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bar-chart"></i> Attendance Today
+                </div>
+
+                <div class="card-body">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+                <div class="card-footer small text-muted">Today's attendance</div>
+            </div><!-- end card-->
+        </div>
+        <!-- END container-fluid -->
+        </div>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-bar-chart"></i> Attendance this Month
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="attendanceRatio"></canvas>
+                    </div>
+                    <div class="card-footer small text-muted">The attendance for this month</div>
+                </div><!-- end card-->
+            </div>
+        </div>
+    </div>
+    <!-- END content -->
+</div>
+
+
+<script src="~/Content/plugins/chart.js/chart.min.js"></script>
+<script src="~/Content/plugins/fullcalendar/jquery-ui.min.js"></script>
+<script src="~/Content/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        /* initialize the external events
+        -----------------------------------------------------------------*/
+        $('#external-events .fc-event').each(function () {
+
+            // store data so the calendar knows to render an event upon drop
+            $(this).data('event', {
+                title: $.trim($(this).text()), // use the element's text as the event title
+                stick: true // maintain when user navigates (see docs on the renderEvent method)
+            });
+
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+
+        /* initialize the calendar
+        -----------------------------------------------------------------*/
+        var date = new Date();
+        var d = date.getDate();
+        m = date.getMonth();
+        y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function (start, end) {
+                var title = prompt('Event Title:');
+                var eventData;
+                if (title) {
+                    eventData = {
+                        title: title,
+                        start: start,
+                        end: end
+                    };
+                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                }
+                $('#calendar').fullCalendar('unselect');
+            },
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 2),
+                    className: 'bg-primary',
+                },
+                {
+                    title: 'Long Event',
+                    start: new Date(y, m, d - 4),
+                    end: new Date(y, m, d - 2),
+                    className: 'bg-info',
+                },
+                {
+                    title: 'Meeting John',
+                    start: new Date(y, m, d, 15, 20),
+                    allDay: false,
+                    className: 'bg-primary',
+                },
+                {
+                    title: 'New Task',
+                    start: new Date(y, m, d, 12, 0),
+                    end: new Date(y, m, d, 16, 0),
+                    allDay: false,
+                    className: 'bg-danger',
+                },
+                {
+                    title: 'Hat day',
+                    start: new Date(y, m, d + 2, 15, 0),
+                    end: new Date(y, m, d + 2, 20, 40),
+                    allDay: false,
+                    className: 'bg-warning',
+                },
+                {
+                    title: 'Alice Birthday',
+                    start: new Date(y, m, d + 4, 15, 0),
+                    end: new Date(y, m, d + 4, 18, 30),
+                    allDay: false,
+                    className: 'bg-info',
+                },
+                {
+                    title: 'Break',
+                    start: new Date(y, m, 27),
+                    end: new Date(y, m, 28),
+                    className: 'bg-danger',
+                }
+
+
+            ],
+            droppable: true, // this allows things to be dropped onto the calendar
+            drop: function () {
+
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+            }
+        });
+    });
+
+    var genderPie = document.getElementById("genderRatio").getContext('2d');
+    var pieChart = new Chart(genderPie, {
+
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [@Model.Girls(), @Model.Boys()],
+                backgroundColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                label: 'Gender ratio'
+            }],
+            labels: [
+                "Girls",
+                "Boys"
+            ]
+        },
+        options: {
+            responsive: true
+        }
+
+
+    });
+
+
+    var attendancePie = document.getElementById("attendanceRatio").getContext('2d');
+    var attendRatioChart = new Chart(attendancePie, {
+
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [@Model.TotalPresent(), @Model.TotalLt, @Model.TotalAbs],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255,99,132,1)',
+                    
+                    'rgba(255, 206, 86, 1)'
+
+                ],
+                label: 'Attendance Ratio'
+            }],
+            labels: [
+                "Present",
+                "Late",
+                "Absent"
+            ]
+        },
+        options: {
+            responsive: true
+        }
+
+
+    });
+
+    var attendanceChart = document.getElementById("attendanceChart").getContext('2d');
+    var attendance = new Chart(attendanceChart, {
+
+        type: 'bar',
+        data: {
+            labels: ["Present", "Late", "Absent"],
+            datasets: [{
+                label: 'Students',
+                data: [@Model.Present(), @Model.Lt, @Model.Abs],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255,99,132,1)',                    
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+
+
+
+    });
+
+</script>

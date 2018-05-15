@@ -1,0 +1,92 @@
+﻿@model SMS.Models.Student
+
+@{
+    ViewBag.Title = "Create Student";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+<link href="~/Content/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                New Student
+            </div>
+            <div class=" card-body ">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GradeID, "GradeID", htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.DropDownList("GradeID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.GradeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MiddleName, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.DropDownList("Gender", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                        <script>
+                            $(function () {
+                                $('input[name="DOB"]').daterangepicker({
+                                    singleDatePicker: true,
+                                    showDropdowns: true,
+                                    maxDate: new Date()
+                                });
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 ">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Students")
+</div>
+<script src="~/Content/plugins/datetimepicker/js/daterangepicker.js"></script>

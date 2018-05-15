@@ -1,0 +1,142 @@
+﻿@model IEnumerable<SMS.Models.Teacher>
+
+@{
+    ViewBag.Title = "Teachers";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create_Teacher")
+</p>
+
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3><i class="fa fa-table"></i> Teachers</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+
+
+                    <table id="teachers" class="table  table-sm table-bordered table-hover display">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Teacher_username)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Firstname)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MiddleName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Gender)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DOB)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.StartDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CellContact)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.HomeContact)
+                                </th>
+                                <th>
+                                    Role
+                                </th>
+                                <th>
+                                    Grade
+                                </th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Teacher_username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Firstname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MiddleName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                <td>
+                                    @item.DOB.ToString().Replace("12:00:00 AM", "")
+                                </td>
+                                <td>
+                                    @item.StartDate.Value.ToString().Replace("12:00:00 AM", "")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CellContact)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HomeContact)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Role.Role1)
+                                </td>
+                                <td>
+                                    <table>
+                                        @foreach (var grade in item.ClassGrades)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @grade.Grade
+                                                </td>
+                                            </tr>
+
+                                        }
+
+                                    </table>
+
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit_Teacher", new { id = item.Teacher_username }) 
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#teachers').DataTable();
+    });
+</script>

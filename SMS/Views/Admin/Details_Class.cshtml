@@ -1,0 +1,183 @@
+﻿@model SMS.Models.ClassGrade
+
+@{
+    ViewBag.Title = "Class Details";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+<h2> @Model.Grade</h2>
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+            <i class="fa fa-id-card"></i> <span>Teachers</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="student-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="false">
+            <i class="fa fa-users"></i> <span>Students</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="subject-tab" data-toggle="tab" href="#subject" role="tab" aria-controls="subject" aria-selected="false">
+            <i class="fa fa-clipboard"></i> <span>Subjects</span>
+        </a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <br />
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        @foreach (var item in Model.Teachers)
+        {
+            <div class="card mb-5" style="max-width:400px; margin: 0 auto;">
+                @if (item.Gender.Equals("M"))
+                {
+                    <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+                }
+                else
+                {
+                    <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+                }
+                <div class="card-body">
+                    <h4 class="card-title text-center">@item.Firstname @item.LastName </h4>
+                    <p class="card-text ">
+
+                        <b> First name: </b>  @item.Firstname <br />
+                        <b> Middle name: </b> @item.MiddleName <br />
+                        <b> Last name: </b> @item.LastName <br />
+                        <b> Gender: </b> @item.Gender <br />
+                        <b> DOB: </b> @item.DOB.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                        <b> School: </b> @Html.DisplayFor(model => model.School.SchoolName) <br />
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        }
+
+        <div class="mt-5">
+            <a href="/Admin/Classes" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="student" role="tabpanel" aria-labelledby="student-tab">
+        <br />
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3><i class="fa fa-table"></i> Students</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="students" class="table  table-sm table-bordered table-hover display">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Student ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Date of Birth
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.Students)
+                                {
+                                    <tr>
+
+                                        <td>
+
+                                            @Html.ActionLink(item.StudentID + "", "Details_Student", new { id = item.StudentID }, new { @class = "btn btn-sm btn-outline-primary" })
+
+                                        </td>
+                                        <td>
+                                            @item.FirstName @item.LastName
+                                        </td>
+                                        <td>
+                                            @item.DOB.Date.ToString().Replace(" 12:00:00 AM", "")
+                                        </td>
+                                    </tr>
+
+
+
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-5">
+            <a href="/Admin/Classes" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="subject" role="tabpanel" aria-labelledby="subject-tab">
+        <br />
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h3><i class="fa fa-table"></i> Subjects</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="subjects" class="table  table-sm table-bordered table-hover display">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.Subjects)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @item.SubjectID
+                                        </td>
+                                        <td>
+                                            @item.Subject1
+                                        </td>
+                                    </tr>
+
+
+
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-5">
+            <a href="/Admin/Classes" class="btn btn-primary ">Back to list</a>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#subjects').DataTable();
+        $('#students').DataTable();
+    });
+
+</script>
+
+

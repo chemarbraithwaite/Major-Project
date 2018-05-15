@@ -1,0 +1,43 @@
+﻿@model SMS.Models.Attendance
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Attendance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Attendance1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attendance1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttendanceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttendanceDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.SchoolID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.SchoolID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

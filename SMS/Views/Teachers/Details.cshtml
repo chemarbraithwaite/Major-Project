@@ -1,0 +1,47 @@
+﻿@model SMS.Models.Teacher
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Teachers/_Teacher_Layout.cshtml";
+}
+
+<div class="card mb-5" style="max-width:400px; margin: 0 auto;">
+    @if (Model.Gender.Equals("M"))
+    {
+        <img class="card-img-top img-fluid" src="~/Content/images/male-student.png" alt="Card image" style="width:100%; height:auto;">
+    }
+    else
+    {
+        <img class="card-img-top img-fluid" src="~/Content/images/female-student.png" alt="Card image" style="width:100%; height:auto;">
+    }
+        <div class="card-body">
+            <h4 class="card-title text-center">@Model.Firstname @Model.LastName </h4>
+            <p class="card-text ">
+
+                <b> First name: </b>  @Model.Firstname <br />
+                <b> Middle name: </b> @Model.MiddleName <br />
+                <b> Last name: </b> @Model.LastName <br />
+                <b> Gender: </b> @Model.Gender <br />
+                <b> DOB: </b> @Model.DOB.Date.ToString().Replace(" 12:00:00 AM", "") <br />
+                <b> DOB: </b> @Model.StartDate.Value.ToString().Replace(" 12:00:00 AM", "") <br />
+
+                <b> Email: </b> @Model.Email <br />
+                <b> Cell contact: </b> @Model.CellContact <br />
+                <b> Home contact: </b> @Model.HomeContact <br />
+                <b> Class: </b> @Model.ClassGrades.FirstOrDefault().Grade <br />
+                <b> School: </b> @Model.School.SchoolName <br />
+
+            </p>
+            <div class="text-center">
+
+                @Html.ActionLink("Edit", "Edit", "", new { @class = "btn btn-primary" })
+            </div>
+            
+
+        </div>
+
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<SMS.Models.ClassGrade>
+
+@{
+    ViewBag.Title = "Classes";
+    Layout = "~/Views/Admin/_Admin_Layout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create_Class")
+</p>
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3><i class="fa fa-table"></i> Students</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="classes" class="table table-sm table-bordered table-hover display col-12">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Details
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Grade)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Teachers)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.School.SchoolName)
+                                </th>
+
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.Grade, "Details_Class", new { id = item.GradeID }, new { @class = "btn btn-sm btn-outline-primary" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Grade)
+                                </td>
+                                <td class="table-responsive">
+                                    <table>
+                                        @foreach (var teacher in item.Teachers)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @teacher.Firstname @teacher.LastName
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.School.SchoolName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit_Class", new { id = item.GradeID }) 
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#classes').DataTable();
+    });
+</script>

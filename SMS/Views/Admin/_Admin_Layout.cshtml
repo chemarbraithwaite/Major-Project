@@ -1,0 +1,200 @@
+﻿
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css/bootstrap.min.css")
+    @Styles.Render("~/Content/css/style.css")
+    @Styles.Render("~/Content/css/font-awesome.min.css")
+
+
+
+    @Scripts.Render("~/Content/js/modernizr.min.js")
+    @Scripts.Render("~/Content/js/jquery.min.js")
+    @Scripts.Render("~/Content/js/moment.min.js")
+    @Scripts.Render("~/Content/js/popper.min.js")
+    @Scripts.Render("~/Content/js/bootstrap.min.js")
+
+    <style>
+        @@media only screen and (max-width: 600px) {
+
+            .schoolName {
+                font-size: 2vw;
+            }
+        }
+    </style>
+
+</head>
+
+@{
+    SMS.Models.SMSEntities db = new SMS.Models.SMSEntities();
+    var teacher = db.Teachers.Find(User.Identity.Name);
+    var SchoolName = teacher.School.SchoolName;
+
+}
+
+<body class="adminbody">
+    <div id="main">
+
+        <!-- top bar navigation -->
+        <div class="headerbar">
+
+            <!-- LOGO -->
+            <div class="headerbar-left">
+                <a href="#" class="logo"><img alt="logo" src="~/Content/images/dash.png" /> <span>Admin</span></a>
+            </div>
+
+            <nav class="navbar-custom">
+
+                <ul class="list-inline float-right mb-0">
+                    <li class="list-inline-item dropdown notif">
+                        <a href="#">
+                            <span class=" logo schoolName">@SchoolName</span>
+                        </a>
+
+
+                    </li>
+                    <li class="list-inline-item dropdown notif">
+                        <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="~/Content/images/user.png" alt="Profile image" class="avatar-rounded">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="text-overflow"><small>Hello, @teacher.Firstname</small> </h5>
+                            </div>
+
+                            <!-- item-->
+                            <a href="/Admin/Details" class="dropdown-item notify-item">
+                                <i class="fa fa-user"></i> <span>Profile</span>
+                            </a>
+
+                            <!-- item-->
+                            <a href="/Login/Logout" class="dropdown-item notify-item">
+                                <i class="fa fa-power-off"></i> <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <ul class="list-inline menu-left mb-0">
+                    <li class="float-left">
+                        <button class="button-menu-mobile open-left">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+        <!-- End Navigation -->
+        <!-- Left Sidebar -->
+        <div class="left main-sidebar">
+
+            <div class="sidebar-inner leftscroll">
+
+                <div id="sidebar-menu">
+
+                    <ul>
+
+                        <li class="submenu">
+                            <a href="/Admin/Index"><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-fw fa-table"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
+                            <ul class="list-unstyled">
+                                <li><a href="/Admin/Teachers">Teachers</a></li>
+                                <li><a href="/Admin/Students">Students</a></li>
+                                <li><a href="/Admin/Guardians">Guardians</a></li>
+                                <li><a href="/Admin/Classes">Classes</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+        <!-- End Sidebar -->
+
+
+        <div class="content-page">
+
+            <!-- Start content -->
+            <div class="content">
+
+                <div class="container-fluid">
+
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="breadcrumb-holder">
+                                <h1 class="main-title float-left">@ViewBag.Title</h1>
+                                <ol class="breadcrumb float-right">
+                                    <li class="breadcrumb-item">Home</li>
+                                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                                </ol>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- END container-fluid -->
+
+            </div>
+            <!-- END content -->
+
+        </div>
+        <!-- END content-page -->
+
+        <footer class="footer">
+            <span class="text-right">
+                Copyright <a href="#">SMS</a>
+            </span>
+            <span class="float-right">
+                Powered by <a target="_blank" href="https://www.pikeadmin.com"><b>Pike Admin</b></a>
+            </span>
+        </footer>
+
+    </div>
+
+
+
+
+    @Scripts.Render("~/Content/js/detect.js")
+    @Scripts.Render("~/Content/js/fastclick.js")
+    @Scripts.Render("~/Content/js/jquery.blockUI.js")
+    @Scripts.Render("~/Content/js/jquery.nicescroll.js")
+    @Scripts.Render("~/Content/js/jquery.scrollTo.min.js")
+    @Scripts.Render("~/Content/js/pikeadmin.js")
+
+
+</body>
+</html>

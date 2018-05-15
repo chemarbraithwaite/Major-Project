@@ -1,0 +1,98 @@
+﻿@model  List<SMS.Models.Student>
+
+<link href="~/Content/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h3>
+                    <i class="fa fa-table"></i> Students Register
+                    @{
+                        
+
+                         DateTime date = ViewBag.Date;
+                    }
+
+                    @date.Month/@date.Year 
+                    @if (Model.Any())
+                    {
+                    <label>(Total Days Marked: @Model[0].Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year)).Count())</label> 
+                    }
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+
+
+                    <table id="students" class="table table-sm table-bordered display">
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    Student ID
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Times Present
+                                </th>
+                                <th>
+                                    Times Late
+                                </th>
+                                <th>
+                                    Times Absent
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int y;}
+                            @foreach (var item in Model)
+    {
+
+                        <tr>
+                            <td>
+                                @item.StudentID
+                            </td>
+                            <td>
+                                @item.FirstName @item.LastName
+                            </td>
+                            <td>
+                                @{ y = item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.MorningAttendance.Equals("Present")).Count() + item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.AfternoonAttendance.Equals("Present")).Count();
+                                    
+                                    }
+                                @y
+                            </td>
+                            <td>
+                                @{ y =item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.MorningAttendance.Equals("Late")).Count() + item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.AfternoonAttendance.Equals("Late")).Count();
+                                    }
+                                @y
+                            </td>
+                            <td>
+                                @{ y = item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.MorningAttendance.Equals("Absent")).Count() + item.Attendances.Where(x => x.AttendanceDate.Month.Equals(date.Month) && x.AttendanceDate.Year.Equals(date.Year) && x.AfternoonAttendance.Equals("Absent")).Count();}
+                                  @y
+                            </td>
+
+
+                        </tr>
+}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#students').DataTable();
+    });
+</script>

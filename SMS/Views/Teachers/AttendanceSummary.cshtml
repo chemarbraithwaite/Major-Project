@@ -1,0 +1,54 @@
+﻿@model List<SMS.Models.Student>
+
+
+@{
+    ViewBag.Title = "Attendance Summary";
+    Layout = "~/Views/Teachers/_Teacher_Layout.cshtml";
+}
+
+<link href="~/Content/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" />
+
+<style>
+</style>
+
+@using (Html.BeginForm("Attendance", "Teachers"))
+{
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mb-5">
+        <div class="card">
+
+            <div class=" card-body ">
+                <p class="card-title font-weight-bold">
+                    Select month for summary
+                </p>
+                <input id="date" type="text" name="date" />
+
+
+
+                <script>
+                    $(function () {
+                        $('input[name="date"]').daterangepicker({
+                            singleDatePicker: true,
+                            showDropdowns: true,
+                            startDate: new Date(),
+                            maxDate: new Date()
+                        });
+                    });
+
+                </script>
+
+                <input type="submit" value="Submit" class="btn btn-outline-primary btn-sm">
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@if (Model != null)
+{ Html.RenderPartial("Attendance", Model); }
+
+
+<script src="~/Content/plugins/datetimepicker/js/daterangepicker.js"></script>
+
+
+

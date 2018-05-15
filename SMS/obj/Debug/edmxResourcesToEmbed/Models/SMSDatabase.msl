@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SMSModelStoreContainer" CdmEntityContainer="SMSEntities">
+    <EntitySetMapping Name="Attendances">
+      <EntityTypeMapping TypeName="SMSModel.Attendance">
+        <MappingFragment StoreEntitySet="Attendance">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="MorningAttendance" ColumnName="MorningAttendance" />
+          <ScalarProperty Name="AfternoonAttendance" ColumnName="AfternoonAttendance" />
+          <ScalarProperty Name="AttendanceDate" ColumnName="AttendanceDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClassGrades">
+      <EntityTypeMapping TypeName="SMSModel.ClassGrade">
+        <MappingFragment StoreEntitySet="ClassGrade">
+          <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Guardians">
+      <EntityTypeMapping TypeName="SMSModel.Guardian">
+        <MappingFragment StoreEntitySet="Guardian">
+          <ScalarProperty Name="GuardianID" ColumnName="GuardianID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CellContact" ColumnName="CellContact" />
+          <ScalarProperty Name="HomeContact" ColumnName="HomeContact" />
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Guardian_Password">
+      <EntityTypeMapping TypeName="SMSModel.Guardian_Password">
+        <MappingFragment StoreEntitySet="Guardian_Password">
+          <ScalarProperty Name="GuardianID" ColumnName="GuardianID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Marks">
+      <EntityTypeMapping TypeName="SMSModel.Mark">
+        <MappingFragment StoreEntitySet="Marks">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+          <ScalarProperty Name="Teacher_username" ColumnName="Teacher_username" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MedicalInformations">
+      <EntityTypeMapping TypeName="SMSModel.MedicalInformation">
+        <MappingFragment StoreEntitySet="MedicalInformation">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="MedSummary" ColumnName="MedSummary" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="SMSModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Role1" ColumnName="Role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Schools">
+      <EntityTypeMapping TypeName="SMSModel.School">
+        <MappingFragment StoreEntitySet="School">
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="SMSModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Student_Password">
+      <EntityTypeMapping TypeName="SMSModel.Student_Password">
+        <MappingFragment StoreEntitySet="Student_Password">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Subjects">
+      <EntityTypeMapping TypeName="SMSModel.Subject">
+        <MappingFragment StoreEntitySet="Subject">
+          <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+          <ScalarProperty Name="Subject1" ColumnName="Subject" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="SMSModel.Teacher">
+        <MappingFragment StoreEntitySet="Teacher">
+          <ScalarProperty Name="Teacher_username" ColumnName="Teacher_username" />
+          <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CellContact" ColumnName="CellContact" />
+          <ScalarProperty Name="HomeContact" ColumnName="HomeContact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teacher_Password">
+      <EntityTypeMapping TypeName="SMSModel.Teacher_Password">
+        <MappingFragment StoreEntitySet="Teacher_Password">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AssignedStudentTeacher" TypeName="SMSModel.AssignedStudentTeacher" StoreEntitySet="AssignedStudentTeacher">
+      <EndProperty Name="Student">
+        <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+      </EndProperty>
+      <EndProperty Name="Teacher">
+        <ScalarProperty Name="Teacher_username" ColumnName="Teacher_username" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AssignedTeacherClassGrade" TypeName="SMSModel.AssignedTeacherClassGrade" StoreEntitySet="AssignedTeacherClassGrade">
+      <EndProperty Name="ClassGrade">
+        <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+      </EndProperty>
+      <EndProperty Name="Teacher">
+        <ScalarProperty Name="Teacher_username" ColumnName="Teacher_username" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClassSubjects" TypeName="SMSModel.ClassSubjects" StoreEntitySet="ClassSubjects">
+      <EndProperty Name="ClassGrade">
+        <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+      </EndProperty>
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Student_Guardian" TypeName="SMSModel.Student_Guardian" StoreEntitySet="Student_Guardian">
+      <EndProperty Name="Guardian">
+        <ScalarProperty Name="GuardianID" ColumnName="GuardianID" />
+      </EndProperty>
+      <EndProperty Name="Student">
+        <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TeacherSubject" TypeName="SMSModel.TeacherSubject" StoreEntitySet="TeacherSubject">
+      <EndProperty Name="Subject">
+        <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+      </EndProperty>
+      <EndProperty Name="Teacher">
+        <ScalarProperty Name="Teacher_username" ColumnName="Teacher_username" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="GuardianLogin" FunctionName="SMSModel.Store.GuardianLogin" />
+    <FunctionImportMapping FunctionImportName="StaffLogin" FunctionName="SMSModel.Store.StaffLogin" />
+  </EntityContainerMapping>
+</Mapping>

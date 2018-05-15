@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Attendance">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="AttendanceDate" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="MorningAttendance" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AfternoonAttendance" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AttendanceDate" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__Attendanc__Stude__208CD6FA" FromRole="Attendance" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="ClassGrade">
+    <Key>
+      <PropertyRef Name="GradeID" />
+    </Key>
+    <Property Name="GradeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="School" Relationship="Self.Fk_classgrade_school" FromRole="ClassGrade" ToRole="School" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_student_grade" FromRole="ClassGrade" ToRole="Student" />
+    <NavigationProperty Name="Teachers" Relationship="Self.AssignedTeacherClassGrade" FromRole="ClassGrade" ToRole="Teacher" />
+    <NavigationProperty Name="Subjects" Relationship="Self.ClassSubjects" FromRole="ClassGrade" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Guardian">
+    <Key>
+      <PropertyRef Name="GuardianID" />
+    </Key>
+    <Property Name="GuardianID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CellContact" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="HomeContact" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Guardian_Password" Relationship="Self.FK__Guardian___Guard__25518C17" FromRole="Guardian" ToRole="Guardian_Password" />
+    <NavigationProperty Name="School" Relationship="Self.FK__Guardian__School__245D67DE" FromRole="Guardian" ToRole="School" />
+    <NavigationProperty Name="Students" Relationship="Self.Student_Guardian" FromRole="Guardian" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Guardian_Password">
+    <Key>
+      <PropertyRef Name="GuardianID" />
+    </Key>
+    <Property Name="GuardianID" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Guardian" Relationship="Self.FK__Guardian___Guard__25518C17" FromRole="Guardian_Password" ToRole="Guardian" />
+  </EntityType>
+  <EntityType Name="Mark">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="SubjectID" />
+      <PropertyRef Name="Month" />
+      <PropertyRef Name="Year" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="SubjectID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Teacher_username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Grade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Month" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Score" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.Fk_student_marks" FromRole="Marks" ToRole="Student" />
+    <NavigationProperty Name="Subject" Relationship="Self.Fk_subject_marks" FromRole="Marks" ToRole="Subject" />
+    <NavigationProperty Name="Teacher" Relationship="Self.Fk_teacher_marks" FromRole="Marks" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="MedicalInformation">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="MedSummary" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__MedicalIn__Stude__29221CFB" FromRole="MedicalInformation" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Teachers" Relationship="Self.Fk_teacher_role" FromRole="Roles" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="SchoolID" />
+    </Key>
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tel" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClassGrades" Relationship="Self.Fk_classgrade_school" FromRole="School" ToRole="ClassGrade" />
+    <NavigationProperty Name="Guardians" Relationship="Self.FK__Guardian__School__245D67DE" FromRole="School" ToRole="Guardian" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_student_school" FromRole="School" ToRole="Student" />
+    <NavigationProperty Name="Teachers" Relationship="Self.Fk_teacher_school" FromRole="School" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="GradeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Attendances" Relationship="Self.FK__Attendanc__Stude__208CD6FA" FromRole="Student" ToRole="Attendance" />
+    <NavigationProperty Name="ClassGrade" Relationship="Self.FK_student_grade" FromRole="Student" ToRole="ClassGrade" />
+    <NavigationProperty Name="Marks" Relationship="Self.Fk_student_marks" FromRole="Student" ToRole="Marks" />
+    <NavigationProperty Name="MedicalInformation" Relationship="Self.FK__MedicalIn__Stude__29221CFB" FromRole="Student" ToRole="MedicalInformation" />
+    <NavigationProperty Name="School" Relationship="Self.FK_student_school" FromRole="Student" ToRole="School" />
+    <NavigationProperty Name="Student_Password" Relationship="Self.FK_PStudentID" FromRole="Student" ToRole="Student_Password" />
+    <NavigationProperty Name="Teachers" Relationship="Self.AssignedStudentTeacher" FromRole="Student" ToRole="Teacher" />
+    <NavigationProperty Name="Guardians" Relationship="Self.Student_Guardian" FromRole="Student" ToRole="Guardian" />
+  </EntityType>
+  <EntityType Name="Student_Password">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_PStudentID" FromRole="Student_Password" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Subject1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Marks" Relationship="Self.Fk_subject_marks" FromRole="Subject" ToRole="Marks" />
+    <NavigationProperty Name="ClassGrades" Relationship="Self.ClassSubjects" FromRole="Subject" ToRole="ClassGrade" />
+    <NavigationProperty Name="Teachers" Relationship="Self.TeacherSubject" FromRole="Subject" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Teacher_username" />
+    </Key>
+    <Property Name="Teacher_username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CellContact" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="HomeContact" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Marks" Relationship="Self.Fk_teacher_marks" FromRole="Teacher" ToRole="Marks" />
+    <NavigationProperty Name="Role" Relationship="Self.Fk_teacher_role" FromRole="Teacher" ToRole="Roles" />
+    <NavigationProperty Name="School" Relationship="Self.Fk_teacher_school" FromRole="Teacher" ToRole="School" />
+    <NavigationProperty Name="Teacher_Password" Relationship="Self.FK_Username" FromRole="Teacher" ToRole="Teacher_Password" />
+    <NavigationProperty Name="Students" Relationship="Self.AssignedStudentTeacher" FromRole="Teacher" ToRole="Student" />
+    <NavigationProperty Name="ClassGrades" Relationship="Self.AssignedTeacherClassGrade" FromRole="Teacher" ToRole="ClassGrade" />
+    <NavigationProperty Name="Subjects" Relationship="Self.TeacherSubject" FromRole="Teacher" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="Teacher_Password">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Teacher" Relationship="Self.FK_Username" FromRole="Teacher_Password" ToRole="Teacher" />
+  </EntityType>
+  <Association Name="FK__Attendanc__Stude__208CD6FA">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Attendance">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_classgrade_school">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="ClassGrade">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_grade">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassGrade">
+        <PropertyRef Name="GradeID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="GradeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Guardian___Guard__25518C17">
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Guardian_Password" Type="Self.Guardian_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Guardian">
+        <PropertyRef Name="GuardianID" />
+      </Principal>
+      <Dependent Role="Guardian_Password">
+        <PropertyRef Name="GuardianID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Guardian__School__245D67DE">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Guardian">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_student_marks">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Marks" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_subject_marks">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Marks" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_marks">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Marks" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="Teacher_username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MedicalIn__Stude__29221CFB">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MedicalInformation" Type="Self.MedicalInformation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="MedicalInformation">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_role">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_student_school">
+    <End Role="School" Type="Self.School" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_teacher_school">
+    <End Role="School" Type="Self.School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="SchoolID" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="SchoolID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PStudentID">
+    <End Role="Student" Type="Self.Student" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Student_Password" Type="Self.Student_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Student_Password">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Username">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Teacher_Password" Type="Self.Teacher_Password" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Teacher_username" />
+      </Principal>
+      <Dependent Role="Teacher_Password">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssignedStudentTeacher">
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+  </Association>
+  <Association Name="AssignedTeacherClassGrade">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="*" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+  </Association>
+  <Association Name="ClassSubjects">
+    <End Role="ClassGrade" Type="Self.ClassGrade" Multiplicity="*" />
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+  </Association>
+  <Association Name="Student_Guardian">
+    <End Role="Guardian" Type="Self.Guardian" Multiplicity="*" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+  </Association>
+  <Association Name="TeacherSubject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+    <EntitySet Name="ClassGrades" EntityType="Self.ClassGrade" />
+    <EntitySet Name="Guardians" EntityType="Self.Guardian" />
+    <EntitySet Name="Guardian_Password" EntityType="Self.Guardian_Password" />
+    <EntitySet Name="Marks" EntityType="Self.Mark" />
+    <EntitySet Name="MedicalInformations" EntityType="Self.MedicalInformation" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Schools" EntityType="Self.School" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="Student_Password" EntityType="Self.Student_Password" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
+    <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+    <EntitySet Name="Teacher_Password" EntityType="Self.Teacher_Password" />
+    <AssociationSet Name="FK__Attendanc__Stude__208CD6FA" Association="Self.FK__Attendanc__Stude__208CD6FA">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Attendance" EntitySet="Attendances" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_classgrade_school" Association="Self.Fk_classgrade_school">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="ClassGrade" EntitySet="ClassGrades" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_grade" Association="Self.FK_student_grade">
+      <End Role="ClassGrade" EntitySet="ClassGrades" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Guardian___Guard__25518C17" Association="Self.FK__Guardian___Guard__25518C17">
+      <End Role="Guardian" EntitySet="Guardians" />
+      <End Role="Guardian_Password" EntitySet="Guardian_Password" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Guardian__School__245D67DE" Association="Self.FK__Guardian__School__245D67DE">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="Guardian" EntitySet="Guardians" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_student_marks" Association="Self.Fk_student_marks">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_subject_marks" Association="Self.Fk_subject_marks">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_marks" Association="Self.Fk_teacher_marks">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MedicalIn__Stude__29221CFB" Association="Self.FK__MedicalIn__Stude__29221CFB">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="MedicalInformation" EntitySet="MedicalInformations" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_role" Association="Self.Fk_teacher_role">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_student_school" Association="Self.FK_student_school">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_teacher_school" Association="Self.Fk_teacher_school">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PStudentID" Association="Self.FK_PStudentID">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Student_Password" EntitySet="Student_Password" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Username" Association="Self.FK_Username">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Teacher_Password" EntitySet="Teacher_Password" />
+    </AssociationSet>
+    <AssociationSet Name="AssignedStudentTeacher" Association="Self.AssignedStudentTeacher">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="AssignedTeacherClassGrade" Association="Self.AssignedTeacherClassGrade">
+      <End Role="ClassGrade" EntitySet="ClassGrades" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="ClassSubjects" Association="Self.ClassSubjects">
+      <End Role="ClassGrade" EntitySet="ClassGrades" />
+      <End Role="Subject" EntitySet="Subjects" />
+    </AssociationSet>
+    <AssociationSet Name="Student_Guardian" Association="Self.Student_Guardian">
+      <End Role="Guardian" EntitySet="Guardians" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="TeacherSubject" Association="Self.TeacherSubject">
+      <End Role="Subject" EntitySet="Subjects" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <FunctionImport Name="GuardianLogin" ReturnType="Collection(Boolean)">
+      <Parameter Name="username" Mode="In" Type="Int32" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="StaffLogin" ReturnType="Collection(Boolean)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>
